@@ -28,7 +28,7 @@ CREATE TABLE user_role
 create table meals
 (
     user_id     integer   not null,
-    meal_id     serial primary key,
+    id     serial primary key,
     dateTime    timestamp not null,
     description varchar   not null,
     calories    integer   not null,
