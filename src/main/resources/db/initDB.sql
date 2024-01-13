@@ -1,4 +1,5 @@
 DROP TABLE IF EXISTS user_role;
+DROP TABLE IF EXISTS meals;
 DROP TABLE IF EXISTS users;
 DROP SEQUENCE IF EXISTS global_seq;
 
@@ -23,3 +24,15 @@ CREATE TABLE user_role
     CONSTRAINT user_roles_idx UNIQUE (user_id, role),
     FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
 );
+
+create table meals
+(
+    user_id     integer   not null,
+    meal_id     serial primary key,
+    dateTime    timestamp not null,
+    description varchar   not null,
+    calories    integer   not null,
+    unique (user_id, dateTime),
+    foreign key (user_id) references users (id) on delete cascade
+);
+create index user_id_index on meals (user_id)
