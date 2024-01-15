@@ -1,11 +1,15 @@
 DELETE
 FROM user_role;
-DELETE
-FROM meals;
+
 DELETE
 FROM users;
 
+DELETE
+FROM meals;
+
+
 ALTER SEQUENCE global_seq RESTART WITH 100000;
+ALTER SEQUENCE meals_id_seq RESTART WITH 1;
 
 INSERT INTO users (name, email, password)
 VALUES ('User', 'user@yandex.ru', 'password'),
