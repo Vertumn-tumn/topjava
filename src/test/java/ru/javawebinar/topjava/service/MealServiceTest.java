@@ -11,12 +11,14 @@ import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.junit4.SpringRunner;
 import ru.javawebinar.topjava.MealTestData;
 import ru.javawebinar.topjava.model.Meal;
+import ru.javawebinar.topjava.util.MealsUtil;
 import ru.javawebinar.topjava.util.exception.NotFoundException;
 
 import java.util.List;
 
 import static org.junit.Assert.assertThrows;
 import static ru.javawebinar.topjava.MealTestData.*;
+import static ru.javawebinar.topjava.UserTestData.ADMIN_ID;
 import static ru.javawebinar.topjava.UserTestData.USER_ID;
 
 @ContextConfiguration({
@@ -31,53 +33,82 @@ public class MealServiceTest {
         SLF4JBridgeHandler.install();
     }
 
-
     @Autowired
     private MealService mealService;
 
     @Test
     public void duplicateDateTimeCreate() {
         assertThrows(DataAccessException.class, () ->
-                mealService.create(new Meal(null, DUPLICATE, "дубль", 500), USER_ID));
+                mealService.create(new Meal(null, DUPLICATE_DATE_TIME, "дубль", 500), USER_ID));
     }
 
     @Test
     public void get() {
-        Meal knowNotInBase = MealTestData.getNew();
-        MealTestData.assertMealEquality(mealService.get(knowNotInBase.getId(), USER_ID), MealTestData.KNOW_IN_BASE);
-        assertThrows(NotFoundException.class, () -> mealService.get(NOT_IN_BASE, USER_ID));
+        MealTestData.assertMealEquality(mealService.get(knowInBase.getId(), USER_ID), MealTestData.knowInBase);
     }
 
     @Test
     public void delete() {
-        mealService.delete(IN_BASE, USER_ID);
-        assertThrows(NotFoundException.class, () -> mealService.get(IN_BASE, USER_ID));
+        mealService.delete(USER_MEAL_ID, USER_ID);
+        assertThrows(NotFoundException.class, () -> mealService.get(USER_MEAL_ID, USER_ID));
     }
 
     @Test
     public void getBetweenInclusive() {
         List<Meal> betweenInclusive = mealService.getBetweenInclusive(START_DATE.toLocalDate(), END_DATE.toLocalDate(), USER_ID);
-        MealTestData.assertMealListSize(betweenInclusive);
+        MealTestData.assertMealListContent(betweenInclusive, IN_BEETWEEN_LIST);
     }
 
     @Test
     public void getAll() {
         List<Meal> all = mealService.getAll(USER_ID);
-        MealTestData.assertMealListSize(all);
+        MealTestData.assertMealListContent(all, MealsUtil.meals);
     }
 
     @Test
     public void update() {
-        Meal updated = MealTestData.getUpdatedMeal();
+        Meal updated = getUpdatedMeal();
         mealService.update(updated, USER_ID);
-        MealTestData.assertMealEquality(mealService.get(updated.getId(), USER_ID), updated);
-        assertThrows(NotFoundException.class, () -> mealService.get(NOT_IN_BASE, USER_ID));
+        MealTestData.assertMealEquality(mealService.get(updated.getId(), USER_ID), getUpdatedMeal());
     }
 
     @Test
     public void create() {
-        Meal newbie = MealTestData.getNew();
-        mealService.create(newbie, USER_ID);
-        MealTestData.assertMealListContains(mealService.getAll(USER_ID), newbie);
+        Meal created = mealService.create(getNewMeal(), USER_ID);
+        Integer newId = created.getId();
+        Meal newMeal = getNewMeal();
+        newMeal.setId(newId);
+        assertMealEquality(created, newMeal);
+        assertMealEquality(mealService.get(newId, USER_ID), newMeal);
+    }
+
+    @Test
+    public void getMealNotBelongToUser() {
+        assertThrows(NotFoundException.class, () -> mealService.get(knowInBase.getId(), ADMIN_ID));
+    }
+
+    @Test
+    public void updateMealNotBelongToUser() {
+        Meal updated = getUpdatedMeal();
+        updated.setId(9);
+        assertThrows(NotFoundException.class, () -> mealService.update(updated, USER_ID));
+    }
+
+    @Test
+    public void deleteMealNotBelongToUser() {
+        Meal updated = getUpdatedMeal();
+        updated.setId(9);
+        assertThrows(NotFoundException.class, () -> mealService.delete(updated.getId(), USER_ID));
+    }
+
+    @Test
+    public void deleteNonExistMeal() {
+        assertThrows(NotFoundException.class, () -> mealService.delete(NON_EXIST, USER_ID));
+    }
+
+    @Test
+    public void getBetweenWithNullValues() {
+        List<Meal> betweenInclusive = mealService.getBetweenInclusive(null, null, USER_ID);
+        MealTestData.assertMealListContent(betweenInclusive, MealsUtil.meals);
     }
 }
