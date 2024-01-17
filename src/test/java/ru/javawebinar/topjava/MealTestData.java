@@ -42,7 +42,7 @@ public class MealTestData {
     }
 
     public static Meal getUpdatedMeal() {
-        Meal meal = new Meal(1, LocalDateTime.of(2020, 1, 30, 10, 0), "Завтрак", 500);
+        Meal meal = new Meal(knowInBase);
         meal.setCalories(222);
         meal.setDescription("лебеди");
         meal.setDateTime(LocalDateTime.of(2023, 1, 31, 20, 0));
