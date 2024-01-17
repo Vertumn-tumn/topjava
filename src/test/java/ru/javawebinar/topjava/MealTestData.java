@@ -1,6 +1,5 @@
 package ru.javawebinar.topjava;
 
-import org.assertj.core.api.Assertions;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.util.MealsUtil;
 
@@ -32,10 +31,6 @@ public class MealTestData {
             assertThat(actual.get(i)).extracting("dateTime", "description", "calories")
                     .contains(expected.get(i).getDateTime(), expected.get(i).getDescription(), expected.get(i).getCalories());
         }
-    }
-
-    public static void assertMealListContains(List<Meal> meals, Meal expectedMeal) {
-        Assertions.assertThat(meals).contains(expectedMeal);
     }
 
     public static Meal getNewMeal() {
