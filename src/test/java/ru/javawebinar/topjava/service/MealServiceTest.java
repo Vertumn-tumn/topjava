@@ -19,6 +19,7 @@ import static org.junit.Assert.assertThrows;
 import static ru.javawebinar.topjava.MealTestData.*;
 import static ru.javawebinar.topjava.UserTestData.ADMIN_ID;
 import static ru.javawebinar.topjava.UserTestData.USER_ID;
+import static ru.javawebinar.topjava.util.DateTimeUtil.convertToLocalDateTimeToDate;
 
 @ContextConfiguration({
         "classpath:spring/spring-app.xml",
@@ -61,7 +62,7 @@ public class MealServiceTest {
     @Test
     public void duplicateDateTimeCreate() {
         assertThrows(DataAccessException.class, () ->
-                service.create(new Meal(null, meal1.getDateTime(), "duplicate", 100), USER_ID));
+                service.create(new Meal(null, convertToLocalDateTimeToDate(meal1.getDateTime()), "duplicate", 100), USER_ID));
     }
 
     @Test
