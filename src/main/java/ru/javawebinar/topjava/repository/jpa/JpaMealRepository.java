@@ -17,6 +17,7 @@ public class JpaMealRepository implements MealRepository {
     @PersistenceContext
     private EntityManager entityManager;
 
+    @Transactional
     @Override
     public Meal save(Meal meal, int userId) {
         if (meal.isNew()) {
@@ -37,35 +38,32 @@ public class JpaMealRepository implements MealRepository {
         }
     }
 
+    @Transactional
     @Override
     public boolean delete(int id, int userId) {
-        return entityManager.createNamedQuery(Meal.DELETE, Meal.class)
+        return entityManager.createQuery("DELETE FROM Meal m WHERE m.id=:id AND m.user.id=:userId")
                 .setParameter("id", id)
-                .setParameter("user_id", userId)
+                .setParameter("userId", userId)
                 .executeUpdate() != 0;
     }
 
     @Override
     public Meal get(int id, int userId) {
-        return entityManager.createNamedQuery(Meal.GET_BY_ID_AND_USER_ID, Meal.class)
+        return entityManager.createQuery("SELECT m from Meal m WHERE m.id=:id AND m.user.id=:userId", Meal.class)
                 .setParameter("id", id)
-                .setParameter("User_id", userId)
+                .setParameter("userId", userId)
                 .getSingleResult();
     }
 
     @Override
     public List<Meal> getAll(int userId) {
-        return entityManager.createNamedQuery(Meal.GET_ALL_MEAL, Meal.class)
-                .setParameter("user_id", userId)
+        return entityManager.createQuery("SELECT m FROM Meal m WHERE m.user.id=:userId", Meal.class)
+                .setParameter("userId", userId)
                 .getResultList();
     }
 
     @Override
     public List<Meal> getBetweenHalfOpen(LocalDateTime startDateTime, LocalDateTime endDateTime, int userId) {
-        return entityManager.createNamedQuery(Meal.GET_IN_INTERVAL, Meal.class)
-                .setParameter("startDateTime", startDateTime)
-                .setParameter("endDateTime", endDateTime)
-                .setParameter("userId", userId)
-                .getResultList();
+        return null;
     }
 }

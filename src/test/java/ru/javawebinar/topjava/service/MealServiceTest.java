@@ -62,7 +62,7 @@ public class MealServiceTest {
     @Test
     public void duplicateDateTimeCreate() {
         assertThrows(DataAccessException.class, () ->
-                service.create(new Meal(null, convertToLocalDateTimeToDate(meal1.getDateTime()), "duplicate", 100), USER_ID));
+                service.create(new Meal(null, meal1.getDateTime(), "duplicate", 100), USER_ID));
     }
 
     @Test
