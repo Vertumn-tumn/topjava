@@ -11,8 +11,6 @@ import java.util.Map;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-import static ru.javawebinar.topjava.util.DateTimeUtil.*;
-
 public class MealsUtil {
     public static final int DEFAULT_CALORIES_PER_DAY = 2000;
 
