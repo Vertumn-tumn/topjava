@@ -18,8 +18,6 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static ru.javawebinar.topjava.repository.jdbc.JdbcMealRepository.HsqlJdbcMealRepository.toActiveProfileDateTime;
-
 
 public abstract class JdbcMealRepository implements MealRepository {
 
@@ -31,7 +29,7 @@ public abstract class JdbcMealRepository implements MealRepository {
 
     private final SimpleJdbcInsert insertMeal;
 
-    @Autowired
+
     protected JdbcMealRepository(JdbcTemplate jdbcTemplate, NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
         this.insertMeal = new SimpleJdbcInsert(jdbcTemplate)
                 .withTableName("meal")
@@ -44,23 +42,28 @@ public abstract class JdbcMealRepository implements MealRepository {
     @Profile(Profiles.HSQL_DB)
     @Repository
     static class HsqlJdbcMealRepository extends JdbcMealRepository {
+        @Autowired
         public HsqlJdbcMealRepository(JdbcTemplate jdbcTemplate, NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
             super(jdbcTemplate, namedParameterJdbcTemplate);
         }
 
-        static Timestamp toActiveProfileDateTime(LocalDateTime localDateTime) {
+        @Override
+        protected Timestamp toActiveProfileDateTime(LocalDateTime localDateTime) {
             return Timestamp.valueOf(localDateTime);
         }
+
     }
 
     @Profile(Profiles.POSTGRES_DB)
     @Repository
     static class PostgresJdbcMealRepository extends JdbcMealRepository {
+        @Autowired
         public PostgresJdbcMealRepository(JdbcTemplate jdbcTemplate, NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
             super(jdbcTemplate, namedParameterJdbcTemplate);
         }
 
-        static LocalDateTime toActiveProfileDateTime(LocalDateTime localDateTime) {
+        @Override
+        protected LocalDateTime toActiveProfileDateTime(LocalDateTime localDateTime) {
             return localDateTime;
         }
     }
@@ -111,4 +114,6 @@ public abstract class JdbcMealRepository implements MealRepository {
                 "SELECT * FROM meal WHERE user_id=?  AND date_time >=  ? AND date_time < ? ORDER BY date_time DESC",
                 ROW_MAPPER, userId, toActiveProfileDateTime(startDateTime), toActiveProfileDateTime(endDateTime));
     }
+
+    protected abstract <T> T toActiveProfileDateTime(LocalDateTime localDateTime);
 }
