@@ -23,6 +23,8 @@
     <logger name="ru.javawebinar.topjava" level="debug"/>
     <logger name="org.springframework.web.servlet" level="debug"/>
 
+    <logger name="org.springframework.orm.jpa.JpaTransactionManager" level="debug"/>
+
     <root level="info">
         <appender-ref ref="file"/>
         <appender-ref ref="console"/>
