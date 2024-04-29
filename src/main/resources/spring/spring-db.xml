@@ -18,6 +18,18 @@
         <jdbc:script encoding="utf-8" location="classpath:db/populateDB.sql"/>
     </jdbc:initialize-database>
 
+    <bean id="customDateFormatter" class="ru.javawebinar.topjava.util.CustomDateFormatter"/>
+    <bean id="customTimeFormatter" class="ru.javawebinar.topjava.util.CustomTimeFormatter"/>
+
+    <bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+        <property name="formatters">
+            <set>
+                <ref bean="customDateFormatter"/>
+                <ref bean="customTimeFormatter"/>
+            </set>
+        </property>
+    </bean>
+
     <!-- Choose profile from (hsqldb/ postgres) and (jdbc/ datajpa/ jpa) -->
 
     <tx:annotation-driven/>

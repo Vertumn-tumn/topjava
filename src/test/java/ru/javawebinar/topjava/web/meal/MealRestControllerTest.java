@@ -53,7 +53,7 @@ class MealRestControllerTest extends AbstractControllerTest {
 
     @Test
     void createWithLocation() throws Exception {
-        Meal newMeal = getNew();
+        Meal newMeal = getNewMeal();
         ResultActions action = perform(MockMvcRequestBuilders.post(REST_URL)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.writeValue(newMeal)))
@@ -68,8 +68,8 @@ class MealRestControllerTest extends AbstractControllerTest {
 
     @Test
     void update() throws Exception {
-        Meal updated = getUpdated();
-        ResultActions action = perform(MockMvcRequestBuilders.put(REST_URL + getUpdated().getId())
+        Meal updated = getUpdatedMeal();
+        ResultActions action = perform(MockMvcRequestBuilders.put(REST_URL + getUpdatedMeal().getId())
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.writeValue(updated)))
                 .andExpect(status().isNoContent());
@@ -80,7 +80,7 @@ class MealRestControllerTest extends AbstractControllerTest {
     @Test
     void getBetween() throws Exception {
         perform(MockMvcRequestBuilders.get(REST_URL + "between?" +
-                "start=" + meal1.getDateTime() + "&end=" + meal3.getDateTime()))
+                "&startTime=" + meal1.getTime() + "&endTime=" + meal3.getTime()))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
