@@ -11,6 +11,7 @@ import ru.javawebinar.topjava.util.exception.NotFoundException;
 import ru.javawebinar.topjava.web.AbstractControllerTest;
 import ru.javawebinar.topjava.web.json.JsonUtil;
 
+import static org.hamcrest.Matchers.containsString;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -69,6 +70,7 @@ class AdminRestControllerTest extends AbstractControllerTest {
                 .content(JsonUtil.writeValue(newUser)))
                 .andExpect(status().isCreated());
 
+
         User created = USER_MATCHER.readFromJson(action);
         int newId = created.id();
         newUser.setId(newId);
@@ -80,16 +82,23 @@ class AdminRestControllerTest extends AbstractControllerTest {
     void getAll() throws Exception {
         perform(MockMvcRequestBuilders.get(REST_URL))
                 .andExpect(status().isOk())
+                .andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(USER_MATCHER.contentJson(admin, guest, user));
     }
 
     @Test
     void getWithMeals() throws Exception {
-        perform(MockMvcRequestBuilders.get(REST_URL+"with-meals?id=100001"))
+        perform(MockMvcRequestBuilders.get(REST_URL + "with-meals?id=100001"))
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(USER_MATCHER.contentJson(admin));
+                .andExpect(USER_MATCHER.contentJson(admin))
+                .andExpect(content().string(containsString("""
+                        {"id":100011,"dateTime":"2020-01-31T21:00:00","description":"Админ ужин","calories":1500}""")))
+                .andExpect(content().string(containsString("""
+                        {"id":100010,"dateTime":"2020-01-31T14:00:00","description":"Админ ланч","calories":510}""")));
+
+
     }
 }
