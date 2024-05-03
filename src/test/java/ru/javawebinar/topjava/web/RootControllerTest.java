@@ -6,7 +6,6 @@ import ru.javawebinar.topjava.model.User;
 
 import java.util.List;
 
-import static org.junit.matchers.JUnitMatchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
