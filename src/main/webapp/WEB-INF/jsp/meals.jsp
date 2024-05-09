@@ -19,19 +19,19 @@
                     <div class="row">
                         <div class="col-2">
                             <label for="startDate">От даты (включая)</label>
-                            <input class="form-control" name="startDate" id="startDate" autocomplete="off">
+                            <input type="date" class="form-control" name="startDate" id="startDate" autocomplete="off">
                         </div>
                         <div class="col-2">
                             <label for="endDate">До даты (включая)</label>
-                            <input class="form-control" name="endDate" id="endDate" autocomplete="off">
+                            <input type="date" class="form-control" name="endDate" id="endDate" autocomplete="off">
                         </div>
                         <div class="offset-2 col-3">
                             <label for="startTime">От времени (включая)</label>
-                            <input class="form-control" name="startTime" id="startTime" autocomplete="off">
+                            <input type="time" class="form-control" name="startTime" id="startTime" autocomplete="off">
                         </div>
                         <div class="col-3">
                             <label for="endTime">До времени (исключая)</label>
-                            <input class="form-control" name="endTime" id="endTime" autocomplete="off">
+                            <input type="time" class="form-control" name="endTime" id="endTime" autocomplete="off">
                         </div>
                     </div>
                 </form>
@@ -41,7 +41,7 @@
                     <span class="fa fa-remove"></span>
                     Отменить
                 </button>
-                <button class="btn btn-primary" onclick="updateTable()">
+                <button class="btn btn-primary" onclick="filter()">
                     <span class="fa fa-filter"></span>
                     Отфильтровать
                 </button>
@@ -64,7 +64,7 @@
             </thead>
             <c:forEach items="${requestScope.meals}" var="meal">
                 <jsp:useBean id="meal" type="ru.javawebinar.topjava.to.MealTo"/>
-                <tr data-meal-excess="${meal.excess}">
+                <tr id="${meal.id}">
                     <td>
                             <%--${meal.dateTime.toLocalDate()} ${meal.dateTime.toLocalTime()}--%>
                             <%--<%=TimeUtil.toString(meal.getDateTime())%>--%>
@@ -74,7 +74,7 @@
                     <td>${meal.description}</td>
                     <td>${meal.calories}</td>
                     <td><a href="meals/update?id=${meal.id}"><spring:message code="common.update"/></a></td>
-                    <td><a href="meals/delete?id=${meal.id}"><spring:message code="common.delete"/></a></td>
+                    <td><a class="delete"><span class="fa fa-remove"></span></a></td>
                 </tr>
             </c:forEach>
         </table>
@@ -92,13 +92,11 @@
                     <div class="form-group">
                         <label for="dateTime" class="col-form-label">Дата/Время</label>
                         <input type="datetime-local" class="form-control" id="dateTime" name="dateTime">
-                        placeholder="Дата/Время">
                     </div>
 
                     <div class="form-group">
                         <label for="description" class="col-form-label">Описание</label>
-                        <input type="text" class="form-control" id="description" name="description"
-                               placeholder="Описание">
+                        <input type="text" class="form-control" id="description" name="description">
                     </div>
 
                     <div class="form-group">
