@@ -6,7 +6,7 @@ const ctx = {
 
 $(function () {
     makeEditable(
-        $("datatable").DataTable({
+        $("#datatable").DataTable({
             "paging": false,
             "info": true,
             "columns": [
@@ -37,16 +37,12 @@ $(function () {
         }));
 });
 
-function updateTableWithData(data) {
-    ctx.datatableApi.clear().rows.add(data).draw();
-}
-
 function filter() {
-    form = $('#filter');
+    let filterForm = $('#filter');
     $.ajax({
         url: mealAjaxUrl + 'filter',
         method: 'GET',
-        data: form.serialize()
+        data: filterForm.serialize()
     }).done(function (data) {
         updateTableWithData(data);
         successNoty("Filtered");
@@ -55,6 +51,19 @@ function filter() {
 
 function clearFilter() {
     $('#filter')[0].reset();
+}
+
+function saveMeal() {
+    $.ajax({
+        type: "POST",
+        url: ctx.ajaxUrl,
+        data: form.serialize()
+    }).done(function () {
+        $("#editRow").modal("hide");
+        $('#detailsForm')[0].reset();
+        updateTable();
+        successNoty("Saved");
+    });
 }
 
 

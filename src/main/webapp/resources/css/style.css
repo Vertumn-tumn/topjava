@@ -16,11 +16,11 @@ dd {
 }
 
 tr[data-meal-excess="false"] {
-    color: green;
+    color: rgba(47, 255, 0, 0.56);
 }
 
 tr[data-meal-excess="true"] {
-    color: red;
+    color: rgba(246, 3, 3, 0.7);
 }
 
 .fa {
