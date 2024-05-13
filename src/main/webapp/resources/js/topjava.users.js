@@ -45,3 +45,17 @@ $(function () {
         })
     );
 });
+
+function changeActivity(id) {
+    const condition = $('#this').is(':checked');
+    $.ajax({
+        url: userAjaxUrl + id,
+        type: "POST",
+        data: {
+            condition: condition
+        }
+    }).done(function () {
+        updateTable();
+        successNoty("change condition")
+    })
+}
