@@ -51,6 +51,7 @@ function filter() {
 
 function clearFilter() {
     $('#filter')[0].reset();
+    updateTable();
 }
 
 function saveMeal() {
@@ -60,8 +61,7 @@ function saveMeal() {
         data: form.serialize()
     }).done(function () {
         $("#editRow").modal("hide");
-        $('#detailsForm')[0].reset();
-        updateTable();
+        filter();
         successNoty("Saved");
     });
 }

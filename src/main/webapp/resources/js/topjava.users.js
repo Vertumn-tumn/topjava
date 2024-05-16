@@ -46,13 +46,12 @@ $(function () {
     );
 });
 
-function changeActivity(id) {
-    const condition = $('#this').is(':checked');
+function changeActivity(id, checked) {
     $.ajax({
         url: userAjaxUrl + id,
         type: "POST",
         data: {
-            condition: condition
+            condition: !checked
         }
     }).done(function () {
         updateTable();
