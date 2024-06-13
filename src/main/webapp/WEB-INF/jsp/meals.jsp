@@ -17,31 +17,36 @@
                 <form id="filter">
                     <div class="row">
                         <div class="col-2">
-                            <label for="startDate"><spring:message code="meal.startDate"/></label>
-                            <input class="form-control" type="date" name="startDate" id="startDate" autocomplete="off">
+                            <label for="startDate_picker"><spring:message code="meal.startDate"/></label>
+                            <input class="form-control" name="endDate" id="startDate_picker"
+                                   autocomplete="off">
                         </div>
                         <div class="col-2">
-                            <label for="endDate"><spring:message code="meal.endDate"/></label>
-                            <input class="form-control" type="date" name="endDate" id="endDate" autocomplete="off">
+                            <label for="endDate_picker"><spring:message code="meal.endDate"/></label>
+                            <input class="form-control" name="endDate" id="endDate_picker"
+                                   autocomplete="off">
                         </div>
                         <div class="offset-2 col-3">
-                            <label for="startTime"><spring:message code="meal.startTime"/></label>
-                            <input class="form-control" type="time" name="startTime" id="startTime" autocomplete="off">
+                            <label for="startTime_picker"><spring:message code="meal.startTime"/></label>
+                            <input class="form-control" name="startTime" id="startTime_picker"
+                                   autocomplete="off">
                         </div>
                         <div class="col-3">
-                            <label for="endTime"><spring:message code="meal.endTime"/></label>
-                            <input class="form-control" type="time" name="endTime" id="endTime" autocomplete="off">
+                            <label for="endTime_picker"><spring:message code="meal.endTime"/></label>
+                            <input class="form-control" name="endTime" id="endTime_picker"
+                                   autocomplete="off">
                         </div>
                     </div>
                 </form>
+
                 <div class="card-footer text-right">
                     <button class="btn btn-danger" onclick="clearFilter()">
                         <span class="fa fa-remove"></span>
-                        <spring:message code="meal.filter"/>
+                        <spring:message code="common.cancel"/>
                     </button>
                     <button class="btn btn-primary" onclick="ctx.updateTable()">
                         <span class="fa fa-filter"></span>
-                        <spring:message code="common.cancel"/>
+                        <spring:message code="meal.filter"/>
                     </button>
                 </div>
             </div>
@@ -110,7 +115,7 @@
 </div>
 <jsp:include page="fragments/footer.jsp"/>
 </body>
-
+<script src="resources/js/topjava.datetimepicker.js"></script>
 <script type="text/javascript">
     const i18n = {}; // https://learn.javascript.ru/object
     i18n["addTitle"] = '<spring:message code="meal.add"/>';
