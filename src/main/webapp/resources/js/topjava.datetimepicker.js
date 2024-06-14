@@ -1,6 +1,6 @@
 $(document).ready(function () {
-    $('#startDate_picker').datetimepicker();
-    $('#endDate_picker').datetimepicker();
-    $('#startTime_picker').datetimepicker();
-    $('#endTime_picker').datetimepicker();
+    $('#filter #startDate').datetimepicker();
+    $('#filter #endDate').datetimepicker();
+    $('#filter #startTime').datetimepicker();
+    $('#filter #endTime').datetimepicker();
 });

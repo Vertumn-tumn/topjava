@@ -7,6 +7,7 @@
 <body>
 <script src="resources/js/topjava.common.js" defer></script>
 <script src="resources/js/topjava.meals.js" defer></script>
+<script src="/resources/js/topjava.datetimepicker.js" defer></script>
 <jsp:include page="fragments/bodyHeader.jsp"/>
 
 <div class="jumbotron pt-4">
@@ -17,24 +18,20 @@
                 <form id="filter">
                     <div class="row">
                         <div class="col-2">
-                            <label for="startDate_picker"><spring:message code="meal.startDate"/></label>
-                            <input class="form-control" name="endDate" id="startDate_picker"
-                                   autocomplete="off">
+                            <label for="startDate"><spring:message code="meal.startDate"/></label>
+                            <input id="startDate" type="text">
                         </div>
                         <div class="col-2">
-                            <label for="endDate_picker"><spring:message code="meal.endDate"/></label>
-                            <input class="form-control" name="endDate" id="endDate_picker"
-                                   autocomplete="off">
+                            <label for="endDate"><spring:message code="meal.endDate"/></label>
+                            <input id="endDate" type="text">
                         </div>
                         <div class="offset-2 col-3">
-                            <label for="startTime_picker"><spring:message code="meal.startTime"/></label>
-                            <input class="form-control" name="startTime" id="startTime_picker"
-                                   autocomplete="off">
+                            <label for="startTime"><spring:message code="meal.startTime"/></label>
+                            <input id="startTime" type="text">
                         </div>
                         <div class="col-3">
-                            <label for="endTime_picker"><spring:message code="meal.endTime"/></label>
-                            <input class="form-control" name="endTime" id="endTime_picker"
-                                   autocomplete="off">
+                            <label for="endTime"><spring:message code="meal.endTime"/></label>
+                            <input id="endTime" type="text">
                         </div>
                     </div>
                 </form>
@@ -115,7 +112,7 @@
 </div>
 <jsp:include page="fragments/footer.jsp"/>
 </body>
-<script src="resources/js/topjava.datetimepicker.js"></script>
+
 <script type="text/javascript">
     const i18n = {}; // https://learn.javascript.ru/object
     i18n["addTitle"] = '<spring:message code="meal.add"/>';
