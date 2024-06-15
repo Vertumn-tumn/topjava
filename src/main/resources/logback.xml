@@ -25,8 +25,6 @@
     <logger name="org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver" level="debug"/>
     <logger name="org.springframework.security" level="debug"/>
 
-    <logger name="org.springframework.orm.jpa.JpaTransactionManager" level="debug"/>
-
     <root level="info">
         <appender-ref ref="file"/>
         <appender-ref ref="console"/>
