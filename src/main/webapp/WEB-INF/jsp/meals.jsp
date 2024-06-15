@@ -7,7 +7,7 @@
 <body>
 <script src="resources/js/topjava.common.js" defer></script>
 <script src="resources/js/topjava.meals.js" defer></script>
-<script src="/resources/js/topjava.datetimepicker.js" defer></script>
+<script src="resources/js/topjava.datetimepicker.js" defer></script>
 <jsp:include page="fragments/bodyHeader.jsp"/>
 
 <div class="jumbotron pt-4">
@@ -19,19 +19,19 @@
                     <div class="row">
                         <div class="col-2">
                             <label for="startDate"><spring:message code="meal.startDate"/></label>
-                            <input id="startDate" type="text">
+                            <input class="form-control" name="startDate" id="startDate" autocomplete="off">
                         </div>
                         <div class="col-2">
                             <label for="endDate"><spring:message code="meal.endDate"/></label>
-                            <input id="endDate" type="text">
+                            <input class="form-control" name="endDate" id="endDate" autocomplete="off">
                         </div>
                         <div class="offset-2 col-3">
                             <label for="startTime"><spring:message code="meal.startTime"/></label>
-                            <input id="startTime" type="text">
+                            <input class="form-control" name="startTime" id="startTime" autocomplete="off">
                         </div>
                         <div class="col-3">
                             <label for="endTime"><spring:message code="meal.endTime"/></label>
-                            <input id="endTime" type="text">
+                            <input class="form-control" name="endTime" id="endTime" autocomplete="off">
                         </div>
                     </div>
                 </form>
@@ -79,7 +79,7 @@
 
                     <div class="form-group">
                         <label for="dateTime" class="col-form-label"><spring:message code="meal.dateTime"/></label>
-                        <input type="datetime-local" class="form-control" id="dateTime" name="dateTime"
+                        <input class="form-control" name="dateTime" type="datetime-local" id="dateTime" autocomplete="off"
                                placeholder="<spring:message code="meal.dateTime"/>">
                     </div>
 
@@ -113,13 +113,7 @@
 <jsp:include page="fragments/footer.jsp"/>
 </body>
 
-<script type="text/javascript">
-    const i18n = {}; // https://learn.javascript.ru/object
-    i18n["addTitle"] = '<spring:message code="meal.add"/>';
-    i18n["editTitle"] = '<spring:message code="meal.edit"/>';
-
-    <c:forEach var="key" items='${["common.deleted","common.saved","common.enabled","common.disabled","common.errorStatus","common.confirm"]}'>
-    i18n["${key}"] = "<spring:message code="${key}"/>";
-    </c:forEach>
-</script>
+<jsp:include page="i18n.jsp">
+    <jsp:param name="page" value="meal"/>
+</jsp:include>
 </html>
